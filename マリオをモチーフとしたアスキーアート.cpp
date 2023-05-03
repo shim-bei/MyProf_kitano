@@ -1,4 +1,4 @@
-//�w�b�_�[�t�@�C���̓ǂݍ���
+//ヘッダーファイルの読み込み
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
@@ -6,7 +6,7 @@
 #include <time.h>
 #include <vector>
 
-//�萔���`
+//定数を定義
 #define F_WIDE (80)
 #define F_HIGHT (21)
 #define LIMIT (50)
@@ -15,7 +15,7 @@
 #define INTER2 (100/FPS)
 #define Grav (3)
 
-//�萔�𖼑O�Œ�`�c�񋓒萔
+//定数を名前で定義…列挙定数
 enum
 {
 	CHARACTER_PLAYER,
@@ -24,13 +24,13 @@ enum
 	CHARACTER_MAX
 };
 
-//�}���I�A�N���{�[�̍��W���܂Ƃ߂Ē�`
+//マリオ、クリボーの座標をまとめて定義
 typedef struct
 {
 	int x, y;
 }VEC2;
 
-//�}���I�A�N���{�[�̌��݁A�ߋ��A�������W���`
+//マリオ、クリボーの現在、過去、初期座標を定義
 typedef struct
 {
 	const VEC2 defaultPosition;
@@ -38,10 +38,10 @@ typedef struct
 	VEC2 lastPosition;
 }CHARACTER;
 
-//�w�i���i�[����ϐ����`
+//背景を格納する変数を定義
 char maze[F_HIGHT][F_WIDE + 1];
 
-//�w�i�𕶎��Œ�`
+//背景を文字で定義
 char defaultMaze[F_HIGHT][F_WIDE + 1] =
 {
 "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$oo$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",
@@ -71,7 +71,7 @@ char defaultMaze[F_HIGHT][F_WIDE + 1] =
 "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
 };
 
-//�}���I�A�N���{�[�̏������W�݂̂����炩���ߑ��
+//マリオ、クリボーの初期座標のみをあらかじめ代入
 CHARACTER characters[CHARACTER_MAX] =
 {
 	{
@@ -94,39 +94,39 @@ CHARACTER characters[CHARACTER_MAX] =
 };
 
 
-//�w�i�̏����f�[�^���R�s�[�imaze�𒼐ڕύX����ƌ��ɖ߂�Ȃ��Ȃ邽�߁j
+//背景の初期データをコピー（mazeを直接変更すると元に戻らなくなるため）
 char screen[F_HIGHT][F_WIDE + 1];
 
 
-//��ԍŏ��ɍs���v���O������ݒ�
+//一番最初に行うプログラムを設定
 void Init()
 {
-	//�z��maze�ɔw�i�̏����z��DefaultMaze���R�s�[������A
+	//配列mazeに背景の初期配列DefaultMazeをコピーした後、
 	memcpy(maze, defaultMaze, sizeof(maze));
 
-	//�}���I�A�N���{�[�̌��݁A�ߋ����W�ɏ������W����
+	//マリオ、クリボーの現在、過去座標に初期座標を代入
 	for (int i = 0; i < CHARACTER_MAX; i++)
 	{
 		characters[i].position = characters[i].lastPosition = characters[i].defaultPosition;
 	}
 }
 
-//�}�b�v�ƃL�����N�^�[��`�悷��
+//マップとキャラクターを描画する
 void D_MAP()
 {
-	//�����𐔎��ɕϊ�
+	//文字を数字に変換
 	memcpy(screen, maze, sizeof maze);
 	for (int i = 0; i < CHARACTER_MAX; i++)
 	{
 		screen[characters[i].position.y][characters[i].position.x] = i;
 	}
-	system("cls");  //��ʂ��N���A
+	system("cls");  //画面をクリア
 
 	for (int y = 0; y < F_HIGHT; y++)
 	{
 		for (int x = 0; x < F_WIDE; x++)
 		{
-			//�}�b�v�̕����̎�ނɉ����ĕ`�悷��A�X�L�[�A�[�g��`�悷��
+			//マップの文字の種類に応じて描画するアスキーアートを描画する
 			switch (screen[y][x]) {
 			case CHARACTER_PLAYER:printf("a"); break;
 			case CHARACTER_KURIBO:printf("b"); break;
@@ -143,7 +143,7 @@ void D_MAP()
 }
 
 
-//���W�̓����蔻����s��
+//座標の当たり判定を行う
 bool Equal(VEC2 _v0, VEC2 _v1)
 {
 	return
@@ -160,7 +160,7 @@ bool FlagKick;
 int STRAGE;
 int Count = 0;
 
-//�}���I���N���{�[�𓥂񂾂��`�F�b�N����֐�
+//マリオがクリボーを踏んだかチェックする関数
 void KickCheck()
 {
 	for (int i = CHARACTER_PLAYER + 1; i < CHARACTER_MAX; i++)
@@ -174,7 +174,7 @@ void KickCheck()
 	}
 }
 
-//�}���I���N���{�[�ɂ����������`�F�b�N
+//マリオがクリボーにあたったかチェック
 void E_CHECK()
 {
 	for (int i = CHARACTER_PLAYER + 1; i < CHARACTER_MAX; i++)
@@ -203,7 +203,7 @@ void E_CHECK()
 	}
 }
 
-//�}���I�A�N���{�[�̉��̃}�b�v�������ۂ��`�F�b�N
+//マリオ、クリボーの下のマップが床か否かチェック
 void F_CHECK()
 {
 	for (int i = 0; i < CHARACTER_MAX; i++)
@@ -216,7 +216,7 @@ void F_CHECK()
 	}
 }
 
-//�}���I���S�[���t���b�O�ɂ����������`�F�b�N
+//マリオがゴールフラッグにあたったかチェック
 void G_CHECK()
 {s
 	if (maze[characters[CHARACTER_PLAYER].position.y][characters[CHARACTER_PLAYER].position.x] == 'f')
@@ -227,7 +227,7 @@ void G_CHECK()
 	}
 }
 
-//�}���I����ʊO�ɏo�����`�F�b�N
+//マリオが画面外に出たかチェック
 void OUT_CHECK()
 {
 	if (0 > characters[CHARACTER_PLAYER].position.y ||
@@ -241,30 +241,30 @@ void OUT_CHECK()
 	}
 }
 
-//main�֐�
+//main関数
 int main()
 {
 	Init();
 	D_MAP();
 
-	//���Ԃ��擾����ϐ����`
+	//時間を取得する変数を定義
 	time_t lastClock = clock();
 	int Keyget;
 
 	Keyget = _getch();
 	if (Keyget == 's') {
 
-		//�hE"���������A�}���I�����ʂ������̓S�[������܂ŌJ��Ԃ�
+		//”E"が押される、マリオが死ぬもしくはゴールするまで繰り返す
 		while (1)
 		{
 			time_t newClock = clock();
 
-			//��莞�Ԃ��o�߂�����
+			//一定時間が経過したら
 			if (newClock > lastClock + INTER)
 			{
 				lastClock = newClock;
 
-				//�N���{�[���ړ�������
+				//クリボーを移動させる
 				for (int i = CHARACTER_PLAYER + 1; i < CHARACTER_MAX; i++)
 				{
 					VEC2 newPosition = characters[i].position;
@@ -277,17 +277,17 @@ int main()
 					characters[i].position = newPosition;
 				}
 
-				//�e�֐��̎��s
+				//各関数の実行
 				F_CHECK();
 				G_CHECK();
 				OUT_CHECK();
 				D_MAP();
 			}
 
-			//�L�[�{�[�h�������ꂽ���̏���
+			//キーボードが押された時の処理
 			if (_kbhit())
 			{
-				//�K�v�ȕϐ����`
+				//必要な変数を定義
 				int i = 0;
 				VEC2 lastPosition;
 				VEC2 lastPosition2;
@@ -295,7 +295,7 @@ int main()
 
 				lastPosition2.y -= 3;
 
-				//�����ꂽ�L�[�ɂ���ă}���I�̍��W��ω�������
+				//押されたキーによってマリオの座標を変化させる
 				switch (_getch())
 				{
 				case 'd':newPosition.x++; break;
@@ -323,11 +323,11 @@ int main()
 				}	break;
 				case 's':newPosition.y++; break;
 
-					//�o�O�h�~�̂��߁A�hE�h�������ꂽ�狭���I��
+					//バグ防止のため、”E”が押されたら強制終了
 				case 'e':exit(0); break;
 				}
 
-				//�}���I�̈ړ��悪�ǂł��u���b�N�ł�������Έړ��A�����łȂ���Έړ����Ȃ�
+				//マリオの移動先が壁でもブロックでも無ければ移動、そうでなければ移動しない
 				if (maze[newPosition.y][newPosition.x] != '#' &&
 					maze[newPosition.y][newPosition.x] != 'b')
 				{
