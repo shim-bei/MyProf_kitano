@@ -1,4 +1,4 @@
-//‰Šúİ’è
+//åˆæœŸè¨­å®š
 
 #define _CRT_SECURE_NO_WARNINGS
 #include "DxLib.h"
@@ -40,8 +40,8 @@ int GameStartTime;
 #include "Func.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	ChangeWindowMode(TRUE); // ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Éİ’è
-	DxLib_Init();   // DXƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	ChangeWindowMode(TRUE); // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã«è¨­å®š
+	DxLib_Init();   // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
 	SetWindowInitPosition(WIN_POS_X, WIN_POS_Y);
 	SetGraphMode(1540,750, 32);
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0) {
-		//1ƒtƒŒ[ƒ€‚²‚Æ‚És‚¤ì‹Æ‚ğ while•¶‚É‚Ü‚Æ‚ß‚½
+		//1ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«è¡Œã†ä½œæ¥­ã‚’ whileæ–‡ã«ã¾ã¨ã‚ãŸ
 		switch (Sce) 
 		{
 		case Menu::Menu_00_TITLE:
@@ -104,7 +104,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 		}
 	}
-	//WaitKey();      // ƒL[“ü—Í‘Ò‚¿
-	DxLib_End();    // DXƒ‰ƒCƒuƒ‰ƒŠI—¹ˆ—
+	//WaitKey();      // ã‚­ãƒ¼å…¥åŠ›å¾…ã¡
+	DxLib_End();    // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªçµ‚äº†å‡¦ç†
 	return 0;
 }
