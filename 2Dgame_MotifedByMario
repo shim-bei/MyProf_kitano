@@ -2,7 +2,7 @@
 class ACTION
 {
 public:
-	//���Z�b�g�p�̃t���b�O
+	//リセット用のフラッグ
 	void NumberReset() 
 	{
 		Flag.Xpl = 0;
@@ -20,7 +20,7 @@ public:
 		Flag.Change = 0;
 		Flag.SleepOut = 0;
 
-		//�K�v�ȃ}���I�ƃN���{�[�̊�b�\�͂���W���`
+		//必要なマリオとクリボーの基礎能力や座標を定義
 		OLD_X = 0;
 		OLD_Y = 0;
 		OLD_STAGE_X = 0;
@@ -51,7 +51,7 @@ public:
 		count = 0;
 		Time = 0.0;
 
-	}//�����̂݃��Z�b�g
+	}//これらのみリセット
 
 
 	struct
@@ -73,7 +73,7 @@ public:
 	}Flag;
 
 
-	//�K�v�ȃ}���I�ƃN���{�[�̊�b�\�͂���W���`
+	//必要なマリオとクリボーの基礎能力や座標を定義
 	int OLD_X = 0;
 	int OLD_Y = 0;
 	int OLD_STAGE_X = 0;
@@ -104,16 +104,16 @@ public:
 
 	}Mar;
 
-	//�Q�̕��̂̍��W���d�Ȃ��Ă��邩���f����֐�
+	//２つの物体の座標が重なっているか判断する関数
 	int CheckHit(int x1, int y1, int h1, int i1, 
 				  int x2, int y2, int h2, int i2) 
-	//������@1�ڂ̕��̂̍��[�@��ڂ̕��̂̉E�[�@�P�ڂ̕��̂̏�[�@��ڂ̕��̂̉��[�@
-	//�Q�ڂ̕��̂̍��[�@�Q�ڂ̕��̂̉E�[�@�Q�ڂ̕��̂̏�[�@�Q�ڂ̕��̂̉��[�@
+	//左から　1つ目の物体の左端　一つ目の物体の右端　１つ目の物体の上端　一つ目の物体の下端　
+	//２つ目の物体の左端　２つ目の物体の右端　２つ目の物体の上端　２つ目の物体の下端　
 	{                                                                          
 		int L1 = x1;
 		int R1 = y1;
 
-		//�X�e�[�W�̈ړ����l��
+		//ステージの移動を考慮
 		int L2 = x2 + Sta_Pos_X;
 		int R2 = y2 + Sta_Pos_X;
 
@@ -122,17 +122,17 @@ public:
 		int O2 = h2;  //h2:h1+CELL
 		int U2 = i2;
 
-		if (R1 < L2) return 0;  //�������Ă��Ȃ�����
+		if (R1 < L2) return 0;  //あたっていない条件
 		if (R2 < L1) return 0;
 
 		if (U1 < O2) return 0;
 		if (U2 < O1) return 0;
 
-		return 1;//����ȊO�͂������Ă���
+		return 1;//それ以外はあったている
 	}
 
 
-	//�L�����N�^�[���ǂ�u���b�N�ɂ����������𔻒f����
+	//キャラクターが壁やブロックにあたったかを判断する
 	void CHECK_HIT()
 	{
 		for (int x = 0; x < STAGE_MAX_X; x++)
@@ -148,7 +148,7 @@ public:
 						y * CELL + 5, y * CELL + CELL))
 					{
 						Kuribo();
-						//�����ړ���ɕǂ�u���b�N������Έړ����Ȃ�
+						//もし移動先に壁やブロックがあれば移動しない
 						Mar.Pos.x = OLD_X;
 						Sta_Pos_X = OLD_STAGE_X;
 						Mar.Pos.y = OLD_Y;
@@ -190,34 +190,34 @@ public:
 		}
 	}
 
-	//�G�����ɗ�����֐�
+	//敵が下に落ちる関数
 	void DropKuri()  
 	{
 		KuriCount += 1;
-		Time = TIME_K * (double)KuriCount / 60.0;  //���Ԃ̌v��
+		Time = TIME_K * (double)KuriCount / 60.0;  //時間の計測
 
-		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2��̌v�Z
+		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2乗の計算
 		for (int y = 1; y <= MoveY; y++)
 		{
-			//�G�̍��W�����ɂP�ړ�������
+			//敵の座標を下に１つ移動させる
 			KuriY += 1;			
 		}
 	}
 
-	//�G�����ɗ�����֐�
+	//敵が下に落ちる関数
 	void DropKuri1() 
 	{
 		KuriCount += 1;
-		Time = TIME_K * (double)KuriCount / 60.0;  //���Ԃ̌v��
+		Time = TIME_K * (double)KuriCount / 60.0;  //時間の計測
 
-		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2��̌v�Z
+		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2乗の計算
 		for (int y = 1; y <= MoveY; y++)
 		{
 			Kuri1Y += 1;
 		}
 	}
 
-	//�L�����N�^�[�̉��Ƀu���b�N�����邩���f����
+	//キャラクターの下にブロックがあるか判断する
 	void UNDER_BROCK_HIT()  
 	{
 		for (int x = 0; x < STAGE_MAX_X; x++)
@@ -225,9 +225,9 @@ public:
 			for (int y = 0; y < STAGE_MAX_Y; y++)
 			{
 				no = maze[x][y];
-				if (no == 0 && Flag.Jum == 0)  //���ɕ����Ă�����
+				if (no == 0 && Flag.Jum == 0)  //宙に浮いていたら
 				{
-					//�v���C���[�̍��W�m�F
+					//プレイヤーの座標確認
 					if (Flag.Rev != 1
 						&& CheckHit(Mar.Pos.x, Mar.Pos.x + CELL,
 						Mar.Pos.y, Mar.Pos.y + CELL,
@@ -238,7 +238,7 @@ public:
 						Flag.Rev = 1;
 						//Flag.Jum = 1;
 					}
-					//�G�̍��W�m�F
+					//敵の座標確認
 					if (CheckHit(KuriX, KuriX + CELL,
 						KuriY, KuriY + CELL, 
 						x * CELL + 5, x * CELL + CELL - 5,
@@ -247,7 +247,7 @@ public:
 					{
 						DropKuri();
 					}
-					//�N���{�[�̍��W�m�F
+					//クリボーの座標確認
 					if (CheckHit(Kuri1X, Kuri1X + CELL,
 						Kuri1Y, Kuri1Y + CELL,
 						x * CELL + 5, x * CELL + CELL - 5,
@@ -262,12 +262,12 @@ public:
 	}
 	
 
-	void DropChar() //�d�͂ɂ���ăL�����N�^�[�𗎂Ƃ��֐�
+	void DropChar() //重力によってキャラクターを落とす関数
 	{
 		count += 1;
-		Time = TIME_K * (double)count / 60.0;  //���Ԃ̌v��
+		Time = TIME_K * (double)count / 60.0;  //時間の計測
 
-		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2��̌v�Z
+		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2乗の計算
 		for (int y = 1; y <= MoveY; y++)
 		{
 			Mar.Pos.y += 1;
@@ -314,7 +314,7 @@ public:
 				no = maze[x][y];
 				if (no != 0)
 				{
-					//�}���I�̍��W���ǂ�u���b�N�łȂ���Ώd�͗��������s����
+					//マリオの座標が壁やブロックでなければ重力落下を実行する
 					if (CheckHit(Mar.Pos.x, Mar.Pos.x + CELL, 
 						Mar.Pos.y, Mar.Pos.y + CELL,
 						x * CELL + 5, x * CELL + CELL - 5,
@@ -343,7 +343,7 @@ public:
 
 private:
 
-	//Act.h�w�b�_�[�t�@�C�����ł̂ݎg�p����ϐ����`
+	//Act.hヘッダーファイル内でのみ使用する変数を定義
 	const int	MoveY_max = CELL * 5;
 	int Sta_Pos_X = 0;
 
@@ -351,10 +351,10 @@ private:
 	double Time = 0.0;
 	const double TIME_K = 3.5;
 
-	//�G�̏���
+	//敵の処理
 	void Kuribo()
 	{
-		//������G�ɓ��������ꍇ
+		//横から敵に当たった場合
 		if (Flag.Dead == 1) 
 		{
 			Mar.Pos.x = KuriX;
@@ -363,7 +363,7 @@ private:
 			Flag.Change = 1;
 			if (Flag.SleepOut == 0)
 			{
-				PlaySoundA("C:/�}���I���C�N/Punch.wav", SND_ASYNC);
+				PlaySoundA("C:/マリオメイク/Punch.wav", SND_ASYNC);
 			}
 		//	DrawGraph(Mar.Pos.x, Mar.Pos.y, Pic.PLAYER, TRUE);
 		//	Tit.Sleeper();
@@ -374,21 +374,21 @@ private:
 		//	Flag.Dead = 0;
 		}
 		
-		//��������G�𓥂񂾏ꍇ
+		//うえから敵を踏んだ場合
 		if(Flag.Kuri == 1)
 		{
 			Mar.Pos.x = KuriX;
 			Mar.Pos.y = KuriY;
 			Tit.GameFinishTime = GetNowCount();
 			Flag.Change = 1;
-			PlaySoundA("C:/�}���I���C�N/BigBomb.wav", SND_ASYNC);
+			PlaySoundA("C:/マリオメイク/BigBomb.wav", SND_ASYNC);
 		//	{
 			Sce = Menu::Menu_05_TITLE;
 		//	}
 		//	KuriX = 0;
 		}
 
-		//�펞��1�̖ڂ̓G�̏���
+		//常時の1体目の敵の処理
 		else if (Flag.Kuri == 0)
 		{
 			KuriX -= KuriMove;
@@ -399,7 +399,7 @@ private:
 			}
 		}
 
-		//�펞�̂Q�̖ڂ̓G�̏���
+		//常時の２体目の敵の処理
 		if (Flag.Kuri1 == 0) 
 		{
 			Kuri1X -= KuriMove1;
@@ -422,14 +422,14 @@ private:
 ACTION Act;
 
 
-void ACTION::Cal()   //�v�Z�p�֐�
+void ACTION::Cal()   //計算用関数
 {
 	if (CheckHitKey(KEY_INPUT_X) != 0) 
 	{
 		while (CheckHitKey(KEY_INPUT_Q) == 0);
 	}
 
-	//�ړ��O�̍��W��ʖ��ŕۑ����Ă���
+	//移動前の座標を別名で保存しておく
 	OLD_X = Mar.Pos.x;
 	OLD_STAGE_X = Sta_Pos_X;
 	OLD_Y = Mar.Pos.y;
@@ -441,8 +441,8 @@ void ACTION::Cal()   //�v�Z�p�֐�
 		Flag.SleepOut = 1;
 	}
 
-	//�����ꂽ�L�[�ɂ���ď����𕪊�
-	//D�������ꂽ��}���I���E�ړ�
+	//押されたキーによって処理を分岐
+	//Dが押されたらマリオが右移動
 	if (CheckHitKey(KEY_INPUT_D) != 0)
 	{
 		Flag.Xpl = 1;
@@ -451,7 +451,7 @@ void ACTION::Cal()   //�v�Z�p�֐�
 	{
 		Flag.Xpl = 0;
 	}
-	//A�������ꂽ��}���I�����ړ�
+	//Aが押されたらマリオが左移動
 	if (CheckHitKey(KEY_INPUT_A) != 0)
 	{
 		Flag.Xmi = 1;
@@ -460,16 +460,16 @@ void ACTION::Cal()   //�v�Z�p�֐�
 	{
 		Flag.Xmi = 0;
 	}
-	//W�������ꂽ��}���I���W�����v
+	//Wが押されたらマリオがジャンプ
 	if (CheckHitKey(KEY_INPUT_W) != 0 && Flag.Fly == 0)
 	{
 		Flag.Jum = 1;
 		Flag.Fly = 1;
-		PlaySoundA("C:/�}���I���C�N/Jump.wav",  SND_ASYNC);
-		Mar.Pos.lastY = Mar.Pos.y;//�W�����v�O�̃}���I�̂����W��ۑ�
+		PlaySoundA("C:/マリオメイク/Jump.wav",  SND_ASYNC);
+		Mar.Pos.lastY = Mar.Pos.y;//ジャンプ前のマリオのｙ座標を保存
 	}
 
-	//M(S)�������ꂽ��L�����N�^�[�̃f�U�C��������
+	//M(S)が押されたらキャラクターのデザインを交換
 	if (CheckHitKey(KEY_INPUT_M) == 1)
 	{
 		Pic.PLAYER = Pic.Mec;
@@ -491,10 +491,10 @@ void ACTION::Cal()   //�v�Z�p�֐�
 		Pic.Mario = Pic.PLAYER;
 	}
 
-	//�}���I��x���W�ɉ�ʈړ����l������
-	Mar.Pos.X_cal = Mar.Pos.x + abs(Sta_Pos_X);//abs:��Βl
+	//マリオのx座標に画面移動を考慮する
+	Mar.Pos.X_cal = Mar.Pos.x + abs(Sta_Pos_X);//abs:絶対値
 
-	//�����ꂽ�L�[�ɂ���čs���鏈���~�R�iD,A,W�j
+	//押されたキーによって行われる処理×３（D,A,W）
 	if (Flag.Xpl == 1) 
 	{
 		WalkCount++;
@@ -523,7 +523,7 @@ void ACTION::Cal()   //�v�Z�p�֐�
 		CHECK_HIT();
 	}
 
-	//�����̏���
+	//落下の処理
 	else if (Flag.Xmi == 1)
 	{
 		WalkRevCount++;
@@ -552,12 +552,12 @@ void ACTION::Cal()   //�v�Z�p�֐�
 		CHECK_HIT();
 	}
 
-	 //�W�����v�̏���
+	 //ジャンプの処理
 	 if (Flag.Rev == 0 && Flag.Jum == 1) {
 		count += 1;
-		Time = TIME_K * (double)count / 60.0;  //���Ԃ̌v��
+		Time = TIME_K * (double)count / 60.0;  //時間の計測
 
-		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2��̌v�Z
+		MoveY = (int)(pow(Time, 2.0)); //MoveY=Time^2 2乗の計算
 		for (int y = 1; y <= MoveY; y++) 
 		{
 			Mar.Pos.y -= 1;
@@ -612,7 +612,7 @@ void ACTION::Cal()   //�v�Z�p�֐�
 		}
 	}
 	
-	 //�L�����N�^�[�����ɕ����Ă�����d�͂��l��
+	 //キャラクターが宙に浮いていたら重力を考慮
 	else if (Flag.Rev == 1 ) 
 	{
 		DropChar();
@@ -622,7 +622,7 @@ void ACTION::Cal()   //�v�Z�p�֐�
 	// CHECK_HIT();
 }
 
-void ACTION::Cha()   //�`��p�֐�
+void ACTION::Cha()   //描画用関数
 {
 	Sta.Out(&Sta_Pos_X);
 	DrawGraph(Mar.Pos.x, Mar.Pos.y, Pic.PLAYER, TRUE);
