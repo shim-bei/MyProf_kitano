@@ -1,7 +1,7 @@
 <!-- 一番新しいデータだけを取り出したい -->
 
 <?php
-$conn = new mysqli('', '', '', '');
+$conn = new mysqli('host', 'username', 'database-name', 'password');
 
 // データを取得
 $sql = "SELECT id, maguro, uni, ebi, tamago, ikura, ika FROM sushineta";
