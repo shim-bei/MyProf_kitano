@@ -1,12 +1,7 @@
 <!-- 一番新しいデータだけを取り出したい -->
 
 <?php
-$text='HELLO WORLD!';
-echo 'hello world!';
-echo $text;
-
-
-$conn = new mysqli('mysql1.php.xdomain.ne.jp', 'sushin_owner', 'sushi1234', 'sushin_honban');
+$conn = new mysqli('', '', '', '');
 
 // データを取得
 $sql = "SELECT id, maguro, uni, ebi, tamago, ikura, ika FROM sushineta";
