@@ -36,7 +36,7 @@ exit();
 
 
 //以下データベースとの接続
-$mysqli = new mysqli('mysql1.php.xdomain.ne.jp', 'sushin_owner', 'sushi1234', 'sushin_honban');
+$mysqli = new mysqli('', '', '', '');
 
 // 接続結果の確認 エラーがあればエラー文を表示
 if (mysqli_connect_errno())
