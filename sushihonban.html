@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+      <head>
+      	<meta charset="UTF-8">
+        <title>寿司だ！！！</title>
+        <meta name="description" connect="寿司だ！">
+        <link rel="stylesheet" href="sushihonban.css">    
+      </head>
+      <body>
+ 
+        <!--テキストボックスと送信ボタンの設置-->
+        <form class="allbox" action="sushihonban.php" method="POST">
+          <input type="text" name="id" placeholder="userID"> <!--type="text"は入力されたテキストをそのまま表示-->
+          
+          <div class="sushineta">
+            　<br>
+            
+            <div class="sushi">
+              マグロ：
+              <br>     
+              <input type="number" name="maguro" value="0" min="0" max="2" list="neta" plaseholder="マグロ">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist> 
+            </div>
+           
+           <!-- <input type="number" name="maguro" value="0" /> -->
+           
+            <!-- <br>
+            ウニ：
+            <input type="radio" name="uni" value="0" /> 0
+            <input type="radio" name="uni" value="1" /> 1
+            <input type="radio" name="uni" value="2" /> 2
+            
+            <br> -->
+            <br>
+
+            <div class="sushi">
+              ウニ：    
+              <br>     
+              <input type="number" name="uni" value="0" min="0" max="2" list="neta" plaseholder="ウニ">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist>    
+            </div>
+           
+            <br>
+
+            <div class="sushi">
+              エビ：
+              <br>     
+              <input type="number" name="ebi" value="0" min="0" max="2" list="neta" plaseholder="エビ">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist>   
+            </div>
+
+            <br>
+
+            <div class="sushi">
+              玉子：
+              <br>     
+              <input type="number" name="tamago" value="0" min="0" max="2" list="neta" plaseholder="玉子">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist> 
+            </div>
+     
+            <br>
+
+            <div class="sushi">
+              イクラ：  
+              <br>     
+              <input type="number" name="ikura" value="0" min="0" max="2" list="neta" plaseholder="イクラ">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist>                
+            </div>
+             
+            <br>
+
+            <div class="sushi">
+              イカ：            
+              <br>
+              <input type="number" name="ika" value="0" min="0" max="2" list="neta" plaseholder="イカ">
+              <datalist id="neta">
+                <option value="1"></option>
+                <option value="2"></option>
+              </datalist> 
+            </div>
+            
+          </div>
+          
+          <input type="submit" value="送信">
+        </form>
+
+        <!--ここまで-->
+
+        
+      </body>
+</html>
