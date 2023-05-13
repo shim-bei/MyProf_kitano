@@ -28,12 +28,6 @@ echo '<p>ERROR : コメントが空白です</p>';
 exit();
 }
 
-// DBに接続　
-
-
-
-
-
 
 //以下データベースとの接続
 $mysqli = new mysqli('host', 'username', 'database-name', 'password');
